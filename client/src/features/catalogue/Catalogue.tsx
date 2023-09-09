@@ -14,6 +14,7 @@ export default function Catalogue() {
 	return (
 		<>
 			<ProductList products={products} />
+			{console.log("test")}
 		</>
 	);
 }
