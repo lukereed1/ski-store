@@ -1,15 +1,16 @@
 import { AppBar, Switch, Toolbar, Typography } from "@mui/material";
 
 interface Props {
-	darkMode: dar;
+	darkmode: Boolean;
+	toggleTheme: () => void;
 }
 
-export default function Header() {
+export default function Header({ toggleTheme }: Props) {
 	return (
 		<AppBar position="static" sx={{ mb: 4 }}>
 			<Toolbar>
 				<Typography variant="h6">SKI-STORE</Typography>
-				<Switch />
+				<Switch onChange={toggleTheme} />
 			</Toolbar>
 		</AppBar>
 	);
