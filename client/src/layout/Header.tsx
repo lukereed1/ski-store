@@ -9,7 +9,6 @@ import {
 	Switch,
 	Toolbar,
 	Typography,
-	colors,
 } from "@mui/material";
 import { NavLink } from "react-router-dom";
 
