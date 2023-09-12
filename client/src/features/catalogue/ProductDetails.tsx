@@ -1,4 +1,5 @@
 import {
+	Button,
 	Divider,
 	Grid,
 	Table,
@@ -9,10 +10,11 @@ import {
 	Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Product } from "../../app/models/product";
 import agent from "../../app/api/agent";
 import NotFound from "../../app/errors/NotFound";
+import LoadingComponent from "../../layout/LoadingComponent";
 
 export default function ProductDetails() {
 	const { id } = useParams<{ id: string }>();
@@ -27,7 +29,7 @@ export default function ProductDetails() {
 				.finally(() => setLoading(false));
 	}, [id]);
 
-	if (loading) return <h3>Loading...</h3>;
+	if (loading) return <LoadingComponent message="Product Loading" />;
 
 	if (!product)
 		return (
@@ -80,6 +82,13 @@ export default function ProductDetails() {
 						</TableBody>
 					</Table>
 				</TableContainer>
+				<Button
+					fullWidth
+					variant="contained"
+					component={Link}
+					to={"/catalogue"}>
+					GO BACK
+				</Button>
 			</Grid>
 		</Grid>
 	);
