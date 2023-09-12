@@ -42,25 +42,17 @@ export default function ProductCard({ product }: Props) {
 			/>
 
 			<CardContent>
-				<Typography
-					gutterBottom
-					color="secondary"
-					variant="h5">
+				<Typography gutterBottom color="secondary" variant="h5">
 					${(product.price / 100).toFixed(2)}
 				</Typography>
-				<Typography
-					variant="body2"
-					color="text.secondary">
+				<Typography variant="body2" color="text.secondary">
 					{product.brand} / {product.type}
 				</Typography>
 			</CardContent>
 
 			<CardActions>
 				<Button size="small">Add TO CART</Button>
-				<Button
-					component={Link}
-					to={`/catalogue/${product.id}`}
-					size="small">
+				<Button component={Link} to={`/catalogue/${product.id}`} size="small">
 					VIEW
 				</Button>
 			</CardActions>

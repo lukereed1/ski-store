@@ -40,7 +40,9 @@ export default function Header({ toggleTheme }: Props) {
 	return (
 		<AppBar
 			position="static"
-			sx={{ mb: 4 }}>
+			sx={{
+				mb: 4,
+			}}>
 			<Toolbar
 				sx={{
 					display: "flex",
