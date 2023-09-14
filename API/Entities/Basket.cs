@@ -1,9 +1,10 @@
+
 namespace API.Entities
 {
     public class Basket
     {
         public int Id { get; set; }
-        public int BuyerId { get; set; }
+        public string BuyerId { get; set; }
         public List<BasketItem> Items { get; set; } = new();
 
         public void AddItem(Product product, int quantity)
@@ -11,10 +12,12 @@ namespace API.Entities
             if (Items.All(item => item.ProductId != product.Id))
             {
                 Items.Add(new BasketItem { ProductId = product.Id, Quantity = quantity });
+                return;
             }
 
             var existingItem = Items.FirstOrDefault(item => item.ProductId == product.Id);
-            if (existingItem != null) existingItem.Quantity = quantity;
+
+            if (existingItem != null) existingItem.Quantity += quantity;
 
         }
 
@@ -27,6 +30,5 @@ namespace API.Entities
             item.Quantity -= quantity;
             if (item.Quantity <= 0) Items.Remove(item);
         }
-
     }
 }
