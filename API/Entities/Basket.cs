@@ -28,6 +28,7 @@ namespace API.Entities
             if (item == null) return;
 
             item.Quantity -= quantity;
+
             if (item.Quantity <= 0) Items.Remove(item);
         }
     }

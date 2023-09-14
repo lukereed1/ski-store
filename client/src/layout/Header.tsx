@@ -10,7 +10,7 @@ import {
 	Toolbar,
 	Typography,
 } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const midlinks = [
 	{ title: "catalogue", path: "/catalogue" },
@@ -49,14 +49,8 @@ export default function Header({ toggleTheme }: Props) {
 					justifyContent: "space-between",
 					alignItems: "center",
 				}}>
-				<Box
-					display={"flex"}
-					alignItems={"center"}>
-					<Typography
-						variant="h6"
-						component={NavLink}
-						to="/"
-						sx={navStyles}>
+				<Box display={"flex"} alignItems={"center"}>
+					<Typography variant="h6" component={NavLink} to="/" sx={navStyles}>
 						SKI-STORE
 					</Typography>
 
@@ -65,11 +59,7 @@ export default function Header({ toggleTheme }: Props) {
 
 				<List sx={{ display: "flex" }}>
 					{midlinks.map(({ title, path }) => (
-						<ListItem
-							component={NavLink}
-							to={path}
-							key={path}
-							sx={navStyles}>
+						<ListItem component={NavLink} to={path} key={path} sx={navStyles}>
 							{title.toUpperCase()}
 						</ListItem>
 					))}
@@ -79,21 +69,17 @@ export default function Header({ toggleTheme }: Props) {
 					<IconButton
 						size="large"
 						edge="start"
-						color="inherit">
-						<Badge
-							badgeContent="4"
-							color="secondary">
+						color="inherit"
+						component={Link}
+						to="basket">
+						<Badge badgeContent="4" color="secondary">
 							<ShoppingCart />
 						</Badge>
 					</IconButton>
 
 					<List sx={{ display: "flex" }}>
 						{rightLinks.map(({ title, path }) => (
-							<ListItem
-								component={NavLink}
-								to={path}
-								key={path}
-								sx={navStyles}>
+							<ListItem component={NavLink} to={path} key={path} sx={navStyles}>
 								{title.toUpperCase()}
 							</ListItem>
 						))}
