@@ -40,10 +40,7 @@ interface Props {
 export default function Header({ toggleTheme }: Props) {
 	const { basket } = useStoreContext();
 
-	const itemCount = basket?.items.reduce(
-		(sum, item) => (sum += item.quantity),
-		0
-	);
+	const itemCount = basket?.items.reduce((sum, item) => sum + item.quantity, 0);
 
 	return (
 		<AppBar

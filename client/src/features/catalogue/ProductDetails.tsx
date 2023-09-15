@@ -1,4 +1,5 @@
 import {
+	Box,
 	Button,
 	Divider,
 	Grid,
@@ -15,28 +16,45 @@ import { Product } from "../../app/models/product";
 import agent from "../../app/api/agent";
 import NotFound from "../../app/errors/NotFound";
 import LoadingComponent from "../../layout/LoadingComponent";
+import { LoadingButton } from "@mui/lab";
+import { useStoreContext } from "../../app/context/StoreContext";
+import { ProductionQuantityLimits } from "@mui/icons-material";
 
 export default function ProductDetails() {
 	const { id } = useParams<{ id: string }>();
+	const { setBasket } = useStoreContext();
 	const [product, setProduct] = useState<Product | null>(null);
-	const [loading, setLoading] = useState(true);
+	const [status, setStatus] = useState({
+		status: true,
+		name: "product-loading",
+	});
 
 	useEffect(() => {
 		id &&
 			agent.Catalogue.details(parseInt(id))
 				.then((response) => setProduct(response))
 				.catch((error) => console.log(error))
-				.finally(() => setLoading(false));
+				.finally(() =>
+					setStatus({
+						status: false,
+						name: "",
+					})
+				);
 	}, [id]);
 
-	if (loading) return <LoadingComponent message="Product Loading" />;
+	function handleAddItem(productId: number) {
+		setStatus({ status: true, name: "product-add" });
+		agent.Basket.addItem(productId, 1)
+			.then((basket) => setBasket(basket))
+			.catch((error) => console.log(error))
+			.finally(() => setStatus({ status: false, name: "" }));
+	}
 
-	if (!product)
-		return (
-			<h3>
-				<NotFound />
-			</h3>
-		);
+	if (status.name === "product-loading" && status.status === true) {
+		return <LoadingComponent message="Product Loading" />;
+	}
+
+	if (!product) return <NotFound />;
 
 	return (
 		<Grid container spacing={6}>
@@ -82,13 +100,22 @@ export default function ProductDetails() {
 						</TableBody>
 					</Table>
 				</TableContainer>
-				<Button
-					fullWidth
-					variant="contained"
-					component={Link}
-					to={"/catalogue"}>
-					GO BACK
-				</Button>
+				<Box display={"flex"} justifyContent={"center"} gap={2}>
+					<LoadingButton
+						loading={status.status === true && status.name === "product-add"}
+						fullWidth
+						variant="contained"
+						onClick={() => handleAddItem(product.id)}>
+						ADD TO CART
+					</LoadingButton>
+					<Button
+						fullWidth
+						variant="contained"
+						component={Link}
+						to={"/catalogue"}>
+						GO BACK
+					</Button>
+				</Box>
 			</Grid>
 		</Grid>
 	);
