@@ -1,6 +1,4 @@
 import {
-	Box,
-	Button,
 	Divider,
 	Grid,
 	Table,
@@ -8,51 +6,54 @@ import {
 	TableCell,
 	TableContainer,
 	TableRow,
+	TextField,
 	Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Product } from "../../app/models/product";
 import agent from "../../app/api/agent";
 import NotFound from "../../app/errors/NotFound";
 import LoadingComponent from "../../layout/LoadingComponent";
-import { LoadingButton } from "@mui/lab";
 import { useStoreContext } from "../../app/context/StoreContext";
-import { ProductionQuantityLimits } from "@mui/icons-material";
+import { LoadingButton } from "@mui/lab";
 
 export default function ProductDetails() {
+	const { basket, setBasket, removeItem } = useStoreContext();
 	const { id } = useParams<{ id: string }>();
-	const { setBasket } = useStoreContext();
 	const [product, setProduct] = useState<Product | null>(null);
-	const [status, setStatus] = useState({
-		status: true,
-		name: "product-loading",
-	});
+	const [loading, setLoading] = useState(true);
+	const [quantity, setQuantity] = useState(0);
+	const item = basket?.items.find((i) => i.productId === product?.id);
 
 	useEffect(() => {
+		if (item) setQuantity(item.quantity);
 		id &&
 			agent.Catalogue.details(parseInt(id))
 				.then((response) => setProduct(response))
 				.catch((error) => console.log(error))
-				.finally(() =>
-					setStatus({
-						status: false,
-						name: "",
-					})
-				);
-	}, [id]);
+				.finally(() => setLoading(false));
+	}, [id, item]);
 
-	function handleAddItem(productId: number) {
-		setStatus({ status: true, name: "product-add" });
-		agent.Basket.addItem(productId, 1)
-			.then((basket) => setBasket(basket))
-			.catch((error) => console.log(error))
-			.finally(() => setStatus({ status: false, name: "" }));
+	function handleInputChange(event: any) {
+		if (event.target.value >= 0) setQuantity(parseInt(event.target.value));
 	}
 
-	if (status.name === "product-loading" && status.status === true) {
-		return <LoadingComponent message="Product Loading" />;
+	function handleUpdateCart() {
+		if (!item || quantity > item.quantity) {
+			const updatedQuantity = item ? quantity - item.quantity : quantity;
+			agent.Basket.addItem(product?.id!, updatedQuantity)
+				.then((basket) => setBasket(basket))
+				.catch((error) => console.log(error));
+		} else {
+			const updatedQuantity = item.quantity - quantity;
+			agent.Basket.removeItem(product?.id!, updatedQuantity)
+				.then(() => removeItem(product?.id!, updatedQuantity))
+				.catch((error) => console.log(error));
+		}
 	}
+
+	if (loading) return <LoadingComponent message="Product Loading" />;
 
 	if (!product) return <NotFound />;
 
@@ -100,22 +101,30 @@ export default function ProductDetails() {
 						</TableBody>
 					</Table>
 				</TableContainer>
-				<Box display={"flex"} justifyContent={"center"} gap={2}>
-					<LoadingButton
-						loading={status.status === true && status.name === "product-add"}
-						fullWidth
-						variant="contained"
-						onClick={() => handleAddItem(product.id)}>
-						ADD TO CART
-					</LoadingButton>
-					<Button
-						fullWidth
-						variant="contained"
-						component={Link}
-						to={"/catalogue"}>
-						GO BACK
-					</Button>
-				</Box>
+				<Grid container spacing={2}>
+					<Grid item xs={6}>
+						<TextField
+							onChange={handleInputChange}
+							label="Quantity in cart"
+							value={quantity}
+							type="number"
+							fullWidth
+						/>
+					</Grid>
+
+					<Grid item xs={6}>
+						<LoadingButton
+							disabled={
+								quantity === item?.quantity || (!item && quantity === 0)
+							}
+							onClick={handleUpdateCart}
+							sx={{ height: "55px" }}
+							fullWidth
+							variant="contained">
+							{item ? "Update Quantity" : "Add to cart"}
+						</LoadingButton>
+					</Grid>
+				</Grid>
 			</Grid>
 		</Grid>
 	);
