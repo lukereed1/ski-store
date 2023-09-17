@@ -17,6 +17,7 @@ import NotFound from "../../app/errors/NotFound";
 import LoadingComponent from "../../layout/LoadingComponent";
 import { useStoreContext } from "../../app/context/StoreContext";
 import { LoadingButton } from "@mui/lab";
+import { currencyFormat } from "../../app/util/util";
 
 export default function ProductDetails() {
 	const { basket, setBasket, removeItem } = useStoreContext();
@@ -70,7 +71,7 @@ export default function ProductDetails() {
 			<Grid item xs={6}>
 				<Typography variant="h3">{product.name}</Typography>
 				<Typography variant="h4" color="secondary">
-					{`$${(product.price / 100).toFixed(2)}`}
+					{currencyFormat(product.price)}
 				</Typography>
 
 				<Divider sx={{ mb: 2 }} />

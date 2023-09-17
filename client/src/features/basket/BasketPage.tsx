@@ -4,6 +4,7 @@ import agent from "../../app/api/agent";
 import LoadingComponent from "../../layout/LoadingComponent";
 import {
 	Box,
+	Button,
 	Grid,
 	IconButton,
 	List,
@@ -22,6 +23,7 @@ import { Add, Delete, Remove } from "@mui/icons-material";
 import { useStoreContext } from "../../app/context/StoreContext";
 import { LoadingButton } from "@mui/lab";
 import BasketSummary from "./BasketSummary";
+import { Link } from "react-router-dom";
 
 export default function BasketPage() {
 	const { basket, setBasket, removeItem } = useStoreContext();
@@ -154,6 +156,9 @@ export default function BasketPage() {
 				<Grid item xs={6} />
 				<Grid item xs={6}>
 					<BasketSummary />
+					<Button variant="contained" fullWidth component={Link} to="/checkout">
+						Checkout
+					</Button>
 				</Grid>
 			</Grid>
 		</>
