@@ -24,9 +24,12 @@ import { useStoreContext } from "../../app/context/StoreContext";
 import { LoadingButton } from "@mui/lab";
 import BasketSummary from "./BasketSummary";
 import { Link } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../app/store/configureStore";
+import { setBasket, removeItem } from "./basketSlice";
 
 export default function BasketPage() {
-	const { basket, setBasket, removeItem } = useStoreContext();
+	const { basket } = useAppSelector((state) => state.basket);
+	const dispatch = useAppDispatch();
 	const [status, setStatus] = useState({
 		status: false,
 		name: "",
@@ -38,7 +41,7 @@ export default function BasketPage() {
 			name: name,
 		});
 		agent.Basket.addItem(productId)
-			.then((basket) => setBasket(basket))
+			.then((basket) => dispatch(setBasket(basket)))
 			.catch((error) => console.log(error))
 			.finally(() =>
 				setStatus({
@@ -54,7 +57,7 @@ export default function BasketPage() {
 			name: name,
 		});
 		agent.Basket.removeItem(productId, quantity)
-			.then(() => removeItem(productId, quantity))
+			.then(() => dispatch(removeItem({ productId, quantity })))
 			.catch((error) => console.log(error))
 			.finally(() =>
 				setStatus({

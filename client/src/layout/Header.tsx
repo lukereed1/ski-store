@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { Link, NavLink } from "react-router-dom";
 import { useStoreContext } from "../app/context/StoreContext";
+import { useAppSelector } from "../app/store/configureStore";
 
 const midlinks = [
 	{ title: "catalogue", path: "/catalogue" },
@@ -38,7 +39,7 @@ interface Props {
 }
 
 export default function Header({ toggleTheme }: Props) {
-	const { basket } = useStoreContext();
+	const { basket } = useAppSelector((state) => state.basket);
 
 	const itemCount = basket?.items.reduce((sum, item) => sum + item.quantity, 0);
 
