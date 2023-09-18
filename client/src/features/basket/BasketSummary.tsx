@@ -7,7 +7,6 @@ import {
 	TableCell,
 	Typography,
 } from "@mui/material";
-import { useStoreContext } from "../../app/context/StoreContext";
 import { currencyFormat } from "../../app/util/util";
 import { useAppSelector } from "../../app/store/configureStore";
 
