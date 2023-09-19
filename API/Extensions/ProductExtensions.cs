@@ -1,3 +1,4 @@
+using System.Security.Cryptography.X509Certificates;
 using API.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,6 +27,24 @@ namespace API.Extensions
             var searchTermLower = searchTerm.Trim().ToLower();
 
             return query.Where(p => p.Name.ToLower().Contains(searchTermLower));
+        }
+
+
+        public static IQueryable<Product> Filter(this IQueryable<Product> query, string brands, string types)
+        {
+            List<string> brandList = new();
+            List<string> typesList = new();
+
+            if (!string.IsNullOrEmpty(brands))
+                brandList.AddRange(brands.ToLower().Split(",").ToList());
+
+            if (!string.IsNullOrEmpty(types))
+                typesList.AddRange(types.ToLower().Split(",").ToList());
+
+            query = query.Where(p => brandList.Count == 0 || brandList.Contains(p.Brand.ToLower()));
+            query = query.Where(p => typesList.Count == 0 || typesList.Contains(p.Type.ToLower()));
+
+            return query;
         }
 
     }
