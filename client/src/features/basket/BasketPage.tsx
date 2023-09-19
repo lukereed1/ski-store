@@ -67,7 +67,7 @@ export default function BasketPage() {
 									<Box alignItems={"center"}>
 										<LoadingButton
 											loading={
-												status === "Item Removing Pending" + item.productId
+												status === "itemRemovingPending" + item.productId
 											}
 											onClick={() => handleRemoveItem(item.productId, 1)}>
 											<Remove color="error" />
@@ -75,7 +75,7 @@ export default function BasketPage() {
 
 										{item.quantity}
 										<LoadingButton
-											loading={status === "Item Add Pending" + item.productId}
+											loading={status === "itemAddPending" + item.productId}
 											onClick={() => handleAddItem(item.productId, 1)}>
 											<Add color="secondary" />
 										</LoadingButton>
@@ -88,7 +88,7 @@ export default function BasketPage() {
 								<TableCell align="right">
 									<LoadingButton
 										loading={
-											status === "Item Removing Pending" + item.productId
+											status === "bulkItemRemovingPending" + item.productId
 										}
 										onClick={() =>
 											handleRemoveItem(item.productId, item.quantity)

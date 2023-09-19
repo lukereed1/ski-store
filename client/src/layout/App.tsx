@@ -9,7 +9,6 @@ import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useStoreContext } from "../app/context/StoreContext";
 import agent from "../app/api/agent";
 import LoadingComponent from "./LoadingComponent";
 import { getCookie } from "../app/util/util";
