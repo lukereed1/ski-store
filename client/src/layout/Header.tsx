@@ -11,7 +11,6 @@ import {
 	Typography,
 } from "@mui/material";
 import { Link, NavLink } from "react-router-dom";
-import { useStoreContext } from "../app/context/StoreContext";
 import { useAppSelector } from "../app/store/configureStore";
 
 const midlinks = [

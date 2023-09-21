@@ -1,6 +1,5 @@
-using System.Security.Cryptography.X509Certificates;
 using API.Entities;
-using Microsoft.EntityFrameworkCore;
+
 
 namespace API.Extensions
 {
