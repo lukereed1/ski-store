@@ -19,9 +19,9 @@ import {
 	Paper,
 	Radio,
 	RadioGroup,
-	TextField,
 	Typography,
 } from "@mui/material";
+import ProductSearch from "./ProductSearch";
 
 const sortOptions = [
 	{ value: "name", label: "Alphabetical" },
@@ -50,7 +50,7 @@ export default function Catalogue() {
 		<Grid container spacing={4}>
 			<Grid item xs={3}>
 				<Paper sx={{ mb: 2 }}>
-					<TextField label="Search Products" variant="outlined" fullWidth />
+					<ProductSearch />
 				</Paper>
 
 				<Paper sx={{ mb: 2, p: 2 }}>
@@ -62,6 +62,7 @@ export default function Catalogue() {
 									value={value}
 									control={<Radio />}
 									label={label}
+									key={value}
 								/>
 							))}
 						</RadioGroup>
@@ -74,6 +75,7 @@ export default function Catalogue() {
 							<FormControlLabel
 								control={<Checkbox defaultChecked />}
 								label={brand}
+								key={brand}
 							/>
 						))}
 					</FormGroup>
@@ -85,6 +87,7 @@ export default function Catalogue() {
 							<FormControlLabel
 								control={<Checkbox defaultChecked />}
 								label={type}
+								key={type}
 							/>
 						))}
 					</FormGroup>
