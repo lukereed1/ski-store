@@ -6,21 +6,14 @@ import {
 	fetchFiltersAsync,
 	fetchProductsAsync,
 	productSelectors,
+	setPageNumber,
 	setProductParams,
 } from "./catalogueSlice";
-import {
-	Box,
-	Checkbox,
-	FormControlLabel,
-	FormGroup,
-	Grid,
-	Pagination,
-	Paper,
-	Typography,
-} from "@mui/material";
+import { Grid, Paper } from "@mui/material";
 import ProductSearch from "./ProductSearch";
 import RadioButtonGroup from "../../app/components/RadioButtonGroup";
 import CheckboxButtons from "../../app/components/CheckboxButtons";
+import AppPagination from "../../app/components/AppPagination";
 
 const sortOptions = [
 	{ value: "name", label: "Alphabetical" },
@@ -30,8 +23,15 @@ const sortOptions = [
 
 export default function Catalogue() {
 	const products = useAppSelector(productSelectors.selectAll);
-	const { status, productLoaded, filtersLoaded, brands, types, productParams } =
-		useAppSelector((state) => state.catalogue);
+	const {
+		status,
+		productLoaded,
+		filtersLoaded,
+		brands,
+		types,
+		productParams,
+		metaData,
+	} = useAppSelector((state) => state.catalogue);
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
@@ -42,11 +42,10 @@ export default function Catalogue() {
 		if (!filtersLoaded) dispatch(fetchFiltersAsync());
 	}, [filtersLoaded, dispatch]);
 
-	if (status.includes("Pending"))
-		return <LoadingComponent message="Products Loading..." />;
+	if (!filtersLoaded) return <LoadingComponent message="Products Loading..." />;
 
 	return (
-		<Grid container spacing={4}>
+		<Grid container columnSpacing={4}>
 			<Grid item xs={3}>
 				<Paper sx={{ mb: 2 }}>
 					<ProductSearch />
@@ -88,15 +87,14 @@ export default function Catalogue() {
 			</Grid>
 
 			<Grid item xs={12}>
-				<Box
-					display={"flex"}
-					justifyContent={"space-between"}
-					paddingLeft={5}
-					paddingRight={3}>
-					<Typography>Displaying 1-6 of 20 items</Typography>
-
-					<Pagination count={10} />
-				</Box>
+				{metaData && (
+					<AppPagination
+						metaData={metaData}
+						onPageChange={(page: number) =>
+							dispatch(setPageNumber({ pageNumber: page }))
+						}
+					/>
+				)}
 			</Grid>
 		</Grid>
 	);
