@@ -1,5 +1,7 @@
 using API.Data;
+using API.Entities;
 using API.Middleware;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +16,12 @@ builder.Services.AddDbContext<StoreContext>(opt =>
 {
     opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+builder.Services.AddCors();
+builder.Services.AddIdentityCore<User>()
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<StoreContext>();
+builder.Services.AddAuthentication();
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
@@ -36,15 +44,16 @@ app.MapControllers();
 
 var scope = app.Services.CreateScope();
 var context = scope.ServiceProvider.GetRequiredService<StoreContext>();
+var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
 // Logger logs information into terminal, for errors etc
 var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 try
 {
     // Applies pending migrations, creates database if it does not exist already
-    context.Database.Migrate();
+    await context.Database.MigrateAsync();
 
     // Can use this without creating instance because it is static
-    DbInitialiser.Initialise(context);
+    await DbInitialiser.Initialise(context, userManager);
 }
 catch (Exception ex)
 {

@@ -24,7 +24,6 @@ const sortOptions = [
 export default function Catalogue() {
 	const products = useAppSelector(productSelectors.selectAll);
 	const {
-		status,
 		productLoaded,
 		filtersLoaded,
 		brands,
