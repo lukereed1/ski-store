@@ -43,10 +43,10 @@ namespace API.Controllers
                     ModelState.AddModelError(error.Code, error.Description);
                 }
 
-                await _userManager.AddToRoleAsync(user, "Member");
-
                 return ValidationProblem();
             }
+
+            await _userManager.AddToRoleAsync(user, "Member");
 
             return StatusCode(201);
         }
