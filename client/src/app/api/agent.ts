@@ -75,6 +75,12 @@ const Basket = {
 		requests.delete(`basket?productId=${productId}&quantity=${quantity}`),
 };
 
+const Account = {
+	login: (values: any) => requests.post("account/login", values),
+	register: (values: any) => requests.post("account/register", values),
+	getCurrentUser: () => requests.get("account/currentUser"),
+};
+
 const TestErrors = {
 	get400Error: () => requests.get("buggy/bad-request"),
 	get401Error: () => requests.get("buggy/unauthorised"),
@@ -87,6 +93,7 @@ const agent = {
 	Catalogue,
 	TestErrors,
 	Basket,
+	Account,
 };
 
 export default agent;
