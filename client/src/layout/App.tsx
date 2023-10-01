@@ -9,11 +9,9 @@ import { useCallback, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import agent from "../app/api/agent";
 import LoadingComponent from "./LoadingComponent";
-import { getCookie } from "../app/util/util";
 import { useAppDispatch } from "../app/store/configureStore";
-import { fetchBasketAsync, setBasket } from "../features/basket/basketSlice";
+import { fetchBasketAsync } from "../features/basket/basketSlice";
 import { fetchCurrentUser } from "../features/account/accountSlice";
 
 function App() {

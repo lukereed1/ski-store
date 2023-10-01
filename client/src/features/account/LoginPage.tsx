@@ -64,6 +64,7 @@ export default function LoginPage() {
 				<TextField
 					margin="normal"
 					fullWidth
+					autoComplete="on"
 					label="Password"
 					type="password"
 					{...register("password", { required: "Password is required" })}
