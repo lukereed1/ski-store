@@ -4,7 +4,6 @@ using API.Entities;
 using API.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
 
 namespace API.Controllers
 {
