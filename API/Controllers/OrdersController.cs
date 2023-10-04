@@ -5,7 +5,6 @@ using API.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
 namespace API.Controllers
 {
@@ -19,24 +18,24 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Order>>> GetOrders()
+        public async Task<ActionResult<List<OrderDto>>> GetOrders()
         {
             return await _context.Orders
-                .Include(o => o.OrderItems)
+                .ProjectOrderToOrderDto()
                 .Where(b => b.BuyerId == User.Identity.Name)
                 .ToListAsync();
         }
 
-        [HttpGet]
-        public async Task<ActionResult<Order>> GetOrder(int id)
+        [HttpGet("{id}", Name = "GetOrder")]
+        public async Task<ActionResult<OrderDto>> GetOrder(int id)
         {
             return await _context.Orders
-                .Include(o => o.OrderItems)
+                .ProjectOrderToOrderDto()
                 .Where(b => b.BuyerId == User.Identity.Name && b.Id == id)
                 .FirstOrDefaultAsync();
         }
 
-        [HttpPost("{id}", Name = "GetOrder")]
+        [HttpPost]
         public async Task<ActionResult<int>> CreateOrder(CreateOrderDto orderDto)
         {
             var basket = await _context.Baskets
