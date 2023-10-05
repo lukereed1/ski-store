@@ -4,6 +4,7 @@ import { router } from "../router/Routes";
 import { URLSearchParams } from "url";
 import { PaginatedResponse } from "../models/pagination";
 import { store } from "../store/configureStore";
+import { request } from "http";
 
 const sleep = () => new Promise((resolve) => setTimeout(resolve, 500));
 
@@ -86,6 +87,13 @@ const Account = {
 	login: (values: any) => requests.post("account/login", values),
 	register: (values: any) => requests.post("account/register", values),
 	getCurrentUser: () => requests.get("account/currentUser"),
+	getUserAddress: () => requests.get("account/userAddress"),
+};
+
+const Order = {
+	list: () => requests.get("orders"),
+	fetch: (id: number) => requests.get(`orders/${id}`),
+	create: (values: any) => requests.post("orders", values),
 };
 
 const TestErrors = {
@@ -101,6 +109,7 @@ const agent = {
 	TestErrors,
 	Basket,
 	Account,
+	Order,
 };
 
 export default agent;
