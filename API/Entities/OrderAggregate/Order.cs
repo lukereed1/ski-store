@@ -13,6 +13,7 @@ namespace API.Entities.OrderAggregate
         public long Subtotal { get; set; }
         public int Delivery { get; set; }
         public OrderStatus OrderStatus { get; set; } = OrderStatus.Pending;
+        public string PaymentIntent { get; set; }
 
         public long GetTotal()
         {

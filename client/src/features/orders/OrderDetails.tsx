@@ -22,7 +22,9 @@ export default function OrderDetails({ order, setSelectedOrderId }: Props) {
 				justifyContent={"space-around"}
 				alignItems={"center"}
 				marginBottom={2}>
-				<Typography variant="h3">Order number: {order?.id}</Typography>
+				<Typography variant="h3">
+					Order #{order?.id} - {order?.orderStatus}
+				</Typography>
 				<Button variant="contained" onClick={() => setSelectedOrderId(0)}>
 					Return
 				</Button>
