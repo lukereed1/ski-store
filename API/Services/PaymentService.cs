@@ -13,7 +13,7 @@ namespace API.Services
             _config = config;
         }
 
-        public async Task<ActionResult<PaymentIntent>> CreateOrUpdatePaymentIntent(Basket basket)
+        public async Task<PaymentIntent> CreateOrUpdatePaymentIntent(Basket basket)
         {
             StripeConfiguration.ApiKey = _config["StripeSettings:SecretKey"];
 
@@ -33,8 +33,7 @@ namespace API.Services
                 };
 
                 intent = await service.CreateAsync(options);
-                basket.PaymentIntent = intent.Id;
-                basket.ClientSecret = intent.ClientSecret;
+
             }
             else
             {
