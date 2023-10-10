@@ -7,6 +7,12 @@ import {
 } from "@mui/material";
 import { useFormContext } from "react-hook-form";
 import AppTextInput from "../../app/components/AppTextInput";
+import {
+	CardCvcElement,
+	CardExpiryElement,
+	CardNumberElement,
+} from "@stripe/react-stripe-js";
+import { StripeInput } from "./StripeInput";
 
 export default function PaymentForm() {
 	const { control } = useFormContext();
@@ -25,33 +31,51 @@ export default function PaymentForm() {
 				</Grid>
 				<Grid item xs={12} md={6}>
 					<TextField
-						required
 						id="cardNumber"
 						label="Card number"
 						fullWidth
 						autoComplete="cc-number"
-						variant="standard"
+						variant="outlined"
+						InputLabelProps={{ shrink: true }}
+						InputProps={{
+							inputComponent: StripeInput,
+							inputProps: {
+								component: CardNumberElement,
+							},
+						}}
 					/>
 				</Grid>
 				<Grid item xs={12} md={6}>
 					<TextField
-						required
 						id="expDate"
 						label="Expiry date"
 						fullWidth
 						autoComplete="cc-exp"
-						variant="standard"
+						variant="outlined"
+						InputLabelProps={{ shrink: true }}
+						InputProps={{
+							inputComponent: StripeInput,
+							inputProps: {
+								component: CardExpiryElement,
+							},
+						}}
 					/>
 				</Grid>
 				<Grid item xs={12} md={6}>
 					<TextField
-						required
 						id="cvv"
 						label="CVV"
 						helperText="Last three digits on signature strip"
 						fullWidth
 						autoComplete="cc-csc"
-						variant="standard"
+						variant="outlined"
+						InputLabelProps={{ shrink: true }}
+						InputProps={{
+							inputComponent: StripeInput,
+							inputProps: {
+								component: CardCvcElement,
+							},
+						}}
 					/>
 				</Grid>
 				<Grid item xs={12}>
