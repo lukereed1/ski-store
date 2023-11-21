@@ -10,7 +10,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { LoadingButton } from "@mui/lab";
 import agent from "../../app/api/agent";
-import { setegid } from "process";
 import { toast } from "react-toastify";
 
 export default function RegisterPage() {
@@ -52,7 +51,7 @@ export default function RegisterPage() {
 				<LockOutlinedIcon />
 			</Avatar>
 			<Typography component="h1" variant="h5">
-				Sign in
+				Register
 			</Typography>
 			<Box
 				component="form"
@@ -84,7 +83,7 @@ export default function RegisterPage() {
 					{...register("email", {
 						required: "Email is required",
 						pattern: {
-							value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+							value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
 							message: "Not a valid email address",
 						},
 					})}
@@ -116,11 +115,11 @@ export default function RegisterPage() {
 					variant="contained"
 					sx={{ mt: 3, mb: 2 }}
 					disabled={!isValid}>
-					Sign In
+					Register
 				</LoadingButton>
 				<Grid container>
 					<Grid item>
-						<Link to={"/register"}>Don't have an account? Sign Up</Link>
+						<Link to={"/login"}>Already have an account? Sign in</Link>
 					</Grid>
 				</Grid>
 			</Box>

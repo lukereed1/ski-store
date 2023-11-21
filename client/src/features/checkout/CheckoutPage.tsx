@@ -97,11 +97,11 @@ export default function CheckoutPage() {
 	async function submitOrder(data: FieldValues) {
 		setLoading(true);
 		const { nameOnCard, saveAddress, ...shippingAddress } = data;
-		if (!stripe || !elements) return; // Not ready for use
+		if (!stripe || !elements || !basket?.clientSecret) return; // Not ready for use
 		try {
 			const cardElement = elements.getElement(CardNumberElement);
 			const paymentResult = await stripe.confirmCardPayment(
-				basket?.clientSecret!,
+				basket.clientSecret,
 				{
 					payment_method: {
 						card: cardElement!,
@@ -125,7 +125,7 @@ export default function CheckoutPage() {
 				dispatch(clearBasket());
 				setLoading(false);
 			} else {
-				setPaymentMessage(paymentResult.error?.message!);
+				setPaymentMessage(paymentResult.error?.message || "Payment Failed");
 				setPaymentSucceeded(false);
 				setLoading(false);
 				setActiveStep(activeStep + 1);

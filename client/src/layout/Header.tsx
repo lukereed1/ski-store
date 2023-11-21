@@ -34,7 +34,7 @@ const navStyles = {
 };
 
 interface Props {
-	darkmode: Boolean;
+	darkmode: boolean;
 	toggleTheme: () => void;
 }
 
@@ -44,11 +44,7 @@ export default function Header({ toggleTheme }: Props) {
 	const itemCount = basket?.items.reduce((sum, item) => sum + item.quantity, 0);
 
 	return (
-		<AppBar
-			position="static"
-			sx={{
-				mb: 4,
-			}}>
+		<AppBar position="static">
 			<Toolbar
 				sx={{
 					display: "flex",

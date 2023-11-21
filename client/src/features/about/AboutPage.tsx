@@ -23,16 +23,14 @@ export default function AboutPage() {
 
 	return (
 		<Container>
-			<Typography
-				gutterBottom
-				variant="h2">
+			<Typography gutterBottom variant="h2">
 				Testing Errors
 			</Typography>
 			<ButtonGroup fullWidth>
 				<Button
 					variant="contained"
 					onClick={() =>
-						agent.TestErrors.get400Error().catch((error) => console.log("test"))
+						agent.TestErrors.get400Error().catch((error) => console.log(error))
 					}>
 					400
 				</Button>
@@ -57,9 +55,7 @@ export default function AboutPage() {
 					}>
 					500
 				</Button>
-				<Button
-					variant="contained"
-					onClick={getValidationError}>
+				<Button variant="contained" onClick={getValidationError}>
 					Validation
 				</Button>
 			</ButtonGroup>
