@@ -1,0 +1,22 @@
+# fly.toml app configuration file generated for lrskistore on 2023-11-22T08:35:49+11:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "lrskistore"
+primary_region = "syd"
+
+[build]
+  image = "lukereed1/skistore:latest"
+
+[env]
+ASPNETCORE_URLS="http://+:8080"
+StripeSettings__PublishableKey="pk_test_51NyNq2CxI3WPeui3j3afaRaL4JuoQrROIc0i1UPXbOVyc1U7uhYXEqfJvsvK03R66j7lo1dlURJuecbytE7wI8e000zJpJ5v9N"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]

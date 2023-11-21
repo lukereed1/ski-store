@@ -1,6 +1,4 @@
-using API.Data.Migrations;
 using API.Entities;
-using Microsoft.AspNetCore.Mvc;
 using Stripe;
 
 namespace API.Services
