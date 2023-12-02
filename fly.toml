@@ -1,4 +1,4 @@
-# fly.toml app configuration file generated for lrskistore on 2023-11-22T08:35:49+11:00
+# fly.toml app configuration file generated for lrskistore on 2023-12-02T14:56:20+11:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
@@ -10,10 +10,10 @@ primary_region = "syd"
   image = "lukereed1/skistore:latest"
 
 [env]
-ASPNETCORE_URLS="http://+:8080"
-StripeSettings__PublishableKey="pk_test_51NyNq2CxI3WPeui3j3afaRaL4JuoQrROIc0i1UPXbOVyc1U7uhYXEqfJvsvK03R66j7lo1dlURJuecbytE7wI8e000zJpJ5v9N"
-Cloudinary__CloudName="dffjbgxi8"
-Cloudinary__ApiKey="643697552121752"
+  ASPNETCORE_URLS = "http://+:8080"
+  Cloudinary__ApiKey = "643697552121752"
+  Cloudinary__CloudName = "dffjbgxi8"
+  StripeSettings__PublishableKey = "pk_test_51NyNq2CxI3WPeui3j3afaRaL4JuoQrROIc0i1UPXbOVyc1U7uhYXEqfJvsvK03R66j7lo1dlURJuecbytE7wI8e000zJpJ5v9N"
 
 [http_service]
   internal_port = 8080
@@ -22,3 +22,8 @@ Cloudinary__ApiKey="643697552121752"
   auto_start_machines = true
   min_machines_running = 0
   processes = ["app"]
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 1024
